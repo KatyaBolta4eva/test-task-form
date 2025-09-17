@@ -18,7 +18,6 @@ function App() {
 	};
 
 	const submitButtonRef = useRef(null);
-	const previousValidityRef = useRef(false);
 
 	const { getState, updatedState } = useStore();
 	const { email, password, repeatPassword } = getState();
@@ -29,13 +28,10 @@ function App() {
 	const isSubmitDisabled = !isFormValid || !isFormFilled;
 
 	useEffect(() => {
-		const currentValidity = !isSubmitDisabled;
-
-		if (isFormValid && !previousValidityRef.current && submitButtonRef.current) {
+		if (isFormValid) {
 			submitButtonRef.current.focus();
 		}
-		previousValidityRef.current = currentValidity;
-	}, [isSubmitDisabled]);
+	}, [isFormValid]);
 
 	const onEmailChange = ({ target }) => {
 		updatedState(target.name, target.value);
